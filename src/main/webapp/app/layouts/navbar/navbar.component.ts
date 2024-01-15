@@ -6,7 +6,6 @@ import HasAnyAuthorityDirective from 'app/shared/auth/has-any-authority.directiv
 import { VERSION } from 'app/app.constants';
 import { Account } from 'app/core/auth/account.model';
 import { AccountService } from 'app/core/auth/account.service';
-import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import NavbarItem from './navbar-item.model';
@@ -27,7 +26,6 @@ export default class NavbarComponent implements OnInit {
   entitiesNavbarItems: NavbarItem[] = [];
 
   constructor(
-    private loginService: LoginService,
     private accountService: AccountService,
     private profileService: ProfileService,
     private router: Router,
@@ -39,14 +37,6 @@ export default class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.entitiesNavbarItems = EntityNavbarItems;
-    this.profileService.getProfileInfo().subscribe(profileInfo => {
-      this.inProduction = profileInfo.inProduction;
-      this.openAPIEnabled = profileInfo.openAPIEnabled;
-    });
-
-    this.accountService.getAuthenticationState().subscribe(account => {
-      this.account = account;
-    });
   }
 
   collapseNavbar(): void {
@@ -55,12 +45,6 @@ export default class NavbarComponent implements OnInit {
 
   login(): void {
     this.router.navigate(['/login']);
-  }
-
-  logout(): void {
-    this.collapseNavbar();
-    this.loginService.logout();
-    this.router.navigate(['']);
   }
 
   toggleNavbar(): void {

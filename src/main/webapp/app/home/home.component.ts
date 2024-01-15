@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import SharedModule from 'app/shared/shared.module';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
+import { ClassificationService } from 'app/classification/service/classification.service';
 
 @Component({
   standalone: true,
@@ -20,15 +21,12 @@ export default class HomeComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
 
   constructor(
-    private accountService: AccountService,
     private router: Router,
+    private classificationService: ClassificationService
   ) {}
 
   ngOnInit(): void {
-    this.accountService
-      .getAuthenticationState()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(account => (this.account = account));
+
   }
 
   login(): void {

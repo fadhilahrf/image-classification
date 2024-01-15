@@ -1,0 +1,13 @@
+<h3>{{ model?.title }}</h3>
+
+<div class="col-md-6">
+    <div class="card" style="width: 50%;">
+        <div class="card-body">
+            <img *ngIf="imageSrc" [src]="imageSrc" style="max-width: 300px; max-height: 300px;" /> 
+            <input #imgInput type="file" (change)="onFileChanged($event)" class="mt-2" accept="image/png, image/jpg, image/jpeg" >
+            <button *ngIf="selectedImage" type="button" class="btn btn-success mt-2" (click)="classify()">Classify</button>
+        </div>
+      </div>
+    <h5 class="mt-2">Result: {{ result }}</h5>
+    <button type="button" class="btn btn-danger" (click)="reset()">Reset</button>
+</div>

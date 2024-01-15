@@ -19,6 +19,8 @@ import { fontAwesomeIcons } from './config/font-awesome-icons';
 import MainComponent from './layouts/main/main.component';
 import MainModule from './layouts/main/main.module';
 import { AppPageTitleStrategy } from './app-page-title-strategy';
+import { DetailComponent } from './classification/detail/detail.component';
+import { ListComponent } from './classification/list/list.component';
 
 @NgModule({
   imports: [
@@ -34,10 +36,13 @@ import { AppPageTitleStrategy } from './app-page-title-strategy';
     Title,
     { provide: LOCALE_ID, useValue: 'en' },
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
-    httpInterceptorProviders,
     { provide: TitleStrategy, useClass: AppPageTitleStrategy },
   ],
   bootstrap: [MainComponent],
+  declarations: [
+    DetailComponent,
+    ListComponent
+  ],
 })
 export class AppModule {
   constructor(applicationConfigService: ApplicationConfigService, iconLibrary: FaIconLibrary, dpConfig: NgbDatepickerConfig) {

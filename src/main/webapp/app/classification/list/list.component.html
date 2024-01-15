@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row d-flex">
+        <div class="col-5 my-1" style="width: 13rem;" *ngFor="let model of MODEL_DATA; let i=index;">
+            <div class="card clickable">
+              <div (click)="goToModelDetail(model.slug!)">
+                <div class="card-header"><h5 class="card-title"><b>{{ model.title }}</b></h5></div>
+                <div class="card-body">
+                  <p *ngIf="model.description" class="card-text text-description">{{ model.description }}</p>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>

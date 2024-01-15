@@ -8,7 +8,6 @@ import { errorRoute } from './layouts/error/error.route';
 
 import HomeComponent from './home/home.component';
 import NavbarComponent from './layouts/navbar/navbar.component';
-import LoginComponent from './login/login.component';
 
 @NgModule({
   imports: [
@@ -25,21 +24,12 @@ import LoginComponent from './login/login.component';
           outlet: 'navbar',
         },
         {
-          path: 'admin',
-          data: {
-            authorities: [Authority.ADMIN],
-          },
-          canActivate: [UserRouteAccessService],
-          loadChildren: () => import('./admin/admin-routing.module'),
-        },
-        {
-          path: 'login',
-          component: LoginComponent,
-          title: 'Sign in',
-        },
-        {
           path: '',
           loadChildren: () => import(`./entities/entity-routing.module`).then(({ EntityRoutingModule }) => EntityRoutingModule),
+        },
+        {
+          path: 'classification',
+          loadChildren: () => import(`./classification/classification-routing.module`).then(({ ClassificationRoutingModule }) => ClassificationRoutingModule),
         },
         ...errorRoute,
       ],
