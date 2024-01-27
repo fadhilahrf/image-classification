@@ -1,13 +1,13 @@
 package com.classification.app.web.rest;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.classification.app.service.ClassificationService;
+import com.classification.app.service.dto.ClassificationDto;
 
 @RestController
 @RequestMapping("/api/classification")
@@ -20,8 +20,8 @@ public class ClassificationResource {
     }
 
     @PostMapping("")
-    public ResponseEntity<Integer> classify(@RequestParam("modelName") String modelName, @RequestParam("imageFile") MultipartFile imageFile) {
-        return ResponseEntity.ok(classificationService.classify(modelName, imageFile));
+    public ResponseEntity<Integer> classify(@ModelAttribute ClassificationDto classificationDto) {
+        return ResponseEntity.ok(classificationService.classify(classificationDto));
     }
     
 }

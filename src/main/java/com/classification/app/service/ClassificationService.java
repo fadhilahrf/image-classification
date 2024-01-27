@@ -9,23 +9,24 @@ import org.nd4j.linalg.dataset.api.preprocessor.ImagePreProcessingScaler;
 import org.nd4j.linalg.factory.Nd4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
+import com.classification.app.service.dto.ClassificationDto;
 
 @Service
 public class ClassificationService {
-    
-    public int classify(String modelName, MultipartFile imageFile) {
+
+    public int classify(ClassificationDto classificationDto) {
         INDArray result = null;
         INDArray idx = null;
         try {
 
-            String fullModelPath = new ClassPathResource("models/" + modelName + ".h5").getFile().getAbsolutePath();
+            String fullModelPath = new ClassPathResource("models/" + classificationDto.getModelName() + ".h5").getFile().getAbsolutePath();
 
             MultiLayerNetwork model = KerasModelImport.importKerasSequentialModelAndWeights(fullModelPath, false);
 
-            NativeImageLoader loader = new NativeImageLoader(128, 128, 3);
+            NativeImageLoader loader = new NativeImageLoader(classificationDto.getInputSize(),classificationDto.getInputSize(), classificationDto.getChannel());
 
-            INDArray image = loader.asMatrix(imageFile.getInputStream()).permute(0,2,3,1);
+            INDArray image = loader.asMatrix(classificationDto.getImageFile().getInputStream()).permute(0,2,3,1);
 
             DataNormalization scalar = new ImagePreProcessingScaler(0, 1);
 

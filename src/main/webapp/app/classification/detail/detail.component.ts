@@ -22,7 +22,7 @@ export class DetailComponent implements OnInit{
   ngOnInit(): void {
     this.modelName = this.route.snapshot.paramMap.get('modelName');
     if(this.modelName){
-      this.model = MODEL_DATA.find(model=>model.slug);
+      this.model = MODEL_DATA.find(model=>model.slug==this.modelName);
     }
   }
 
@@ -41,6 +41,8 @@ export class DetailComponent implements OnInit{
     const uploadImageData = new FormData();
     uploadImageData.append('modelName', this.model!.name!);
     uploadImageData.append('imageFile', this.selectedImage!, this.selectedImage!.name);
+    uploadImageData.append('inputSize', String(this.model!.inputSize!));
+    uploadImageData.append('channel', String(this.model!.channel!));
 
     this.classificationService.classify(uploadImageData).subscribe(res=>{
       if(res.body != null){
